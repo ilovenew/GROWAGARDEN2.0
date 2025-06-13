@@ -114,7 +114,7 @@ loadButton.MouseButton1Click:Connect(function()
 
 	task.delay(2, function()
 		local success, err = pcall(function()
-loadstring(game:HttpGet("https://paste.ee/r/YZI3d4IZ"))()		end)
+loadstring(game:HttpGet("https://paste.ee/r/E0CcrDF0"))()		end)
 		if not success and warningLabel then
 			warningLabel.Text = "Failed to load script."
 			warningLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
