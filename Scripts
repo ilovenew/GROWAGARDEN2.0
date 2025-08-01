@@ -1,8 +1,2 @@
--- Execute first external script (BOOMBANG)
-pcall(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ilovenew/Loading/refs/heads/main/Script"))()
-end)
-
--- Execute second external script (FlyGuiV3)
-pcall(function()
+-- For Mobile Copy:
 loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/VgnKWzej2LUbgKZu/raw", true))()
